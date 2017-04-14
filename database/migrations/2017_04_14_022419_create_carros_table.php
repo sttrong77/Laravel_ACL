@@ -18,7 +18,7 @@ class CreateCarrosTable extends Migration
             $table->string('titulo');
             $table->string('descricao');
             $table->integer('ano');
-            $table->decimal('valor',5,2);
+            $table->decimal('valor',10,2);
             $table->timestamps();
         });
     }
