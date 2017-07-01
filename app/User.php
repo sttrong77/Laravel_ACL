@@ -31,4 +31,54 @@ class User extends Authenticatable
         return $this->belongsToMany('App\Carro');//retorna usuários associado ao carro.
     }
 
+    public function chamados(){
+        return $this->belongsToMany('App\Chamado');//retorna usuários associado ao carro.
+    }
+
+    public function eAdmin(){
+        // return $this->id ==1;
+        return $this->existePapel('Admin');
+    }
+
+    public function papeis(){
+      return $this->belongsToMany(Papel::class);
+    }
+
+    public function adicionaPapel($papel)
+    {
+        if (is_string($papel)) {
+            $papel = Papel::where('nome','=',$papel)->firstOrFail();
+        }
+
+        if($this->existePapel($papel)){
+            return;
+        }
+
+        return $this->papeis()->attach($papel);
+
+    }
+    public function existePapel($papel)
+    {
+        if (is_string($papel)) {
+            $papel = Papel::where('nome','=',$papel)->firstOrFail();
+        }
+
+        return (boolean) $this->papeis()->find($papel->id);
+
+    }
+
+    public function removePapel($papel)
+    {
+        if (is_string($papel)) {
+            $papel = Papel::where('nome','=',$papel)->firstOrFail();
+        }
+
+        return $this->papeis()->detach($papel);
+    }
+
+    public function temUmPapelDestes($papeis){
+        $userPapeis = $this->papeis; //lista de papeis do usuário
+        return $papeis->intersect($userPapeis)->count();//numero de interseccao
+    }
+
 }

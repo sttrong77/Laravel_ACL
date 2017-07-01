@@ -42,6 +42,11 @@
               <button class="btn green">Entrar</button>
               <a href="{{ url('/password/reset') }}"  class="btn orange">Recuperar senha</a>
             </div>
+            <div class="col s12">
+              <a href="{{ url('/password/reset') }}"  class="btn blue">Logar com github</a>
+              <a href="{{ url('/password/reset') }}"  class="btn green">Logar com facebook</a>
+            </div>
+
           </form>
       </div>
   </div>
